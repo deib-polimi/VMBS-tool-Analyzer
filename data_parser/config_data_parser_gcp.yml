@@ -1,19 +1,19 @@
 vms:
     e2-t1-1-euw3a:
-      name: e2-t1-1-euw3a
+      name: e2-t1-1 - euw3a
       price: 0.071272
     e2-t1-2-euw3b:
-      name: e2-t1-2-euw3b
+      name: e2-t1-2 - euw3b
       price: 0.071272
     e2-t2-1-euw3a:
-      name: e2-t2-1-euw3a
+      name: e2-t2-1 - euw3a
       price: 0.142544
     n1-t1-1-euw3a:
-      name: n1-t1-1-euw3a
+      name: n1-t1-1 - euw3a
       price: 0.125008
     n1-t1-2-euw3b:
-      name: n1-t1-2-euw3b
+      name: n1-t1-2 - euw3b
       price: 0.125008
     n1-t2-1-euw3a:
-      name: n1-t2-1-euw3a
+      name: n1-t2-1 - euw3a
       price: 0.250016
