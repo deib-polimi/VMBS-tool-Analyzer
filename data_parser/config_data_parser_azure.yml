@@ -1,19 +1,25 @@
 vms:
     A2-1:
-      name: A2-1 - eu
+      name: A2-1
+      long_name: A2-1 - eu
       price: 0.087
     A2-2:
-      name: A2-2 - eu
+      name: A2-2
+      long_name: A2-2 - eu
       price: 0.087
     A4-1:
-      name: A4-1 - eu
+      name: A4-1
+      long_name: A4-1 - eu
       price: 0.183
     B2MS-1:
-      name: B2MS-1 - eu
+      name: B2MS-1
+      long_name: B2MS-1 - eu
       price: 0.096
     B2MS-2:
-      name: B2MS-2 - eu
+      name: B2MS-2
+      long_name: B2MS-2 - eu
       price: 0.096
     B4MS-1:
-      name: B4MS-1 - eu
+      name: B4MS-1
+      long_name: B4MS-1 - eu
       price: 0.192

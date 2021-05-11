@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-  <title>Cloud Performance Results</title>
+  <title>VMBS / Analyzer</title>
   <style>
     body {
       min-height: 75rem;
@@ -133,7 +133,7 @@
 
 <body>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">Cloud Performance</a>
+    <a class="navbar-brand" href="#">VMBS / Analyzer</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
       aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -156,27 +156,21 @@
   <div class="container-fluid text-center">
     <form>
       <div class="form-row">
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
           <label for="provider">Provider</label>
           <select id="provider" class="form-control">
             <option selected>all</option>
           </select>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
           <label for="graphType">Graph</label>
           <select id="graphType" class="form-control">
             <option selected></option>
           </select>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
           <label for="benchName">Bench Name</label>
           <select id="benchName" class="form-control">
-            <option selected></option>
-          </select>
-        </div>
-        <div class="form-group col-md-3">
-          <label for="extractedName">Extracted Value</label>
-          <select id="extractedName" class="form-control">
             <option selected></option>
           </select>
         </div>
@@ -207,23 +201,17 @@
   <script>
     // extract unique benchmark names
     var benchNames = new Set();
-    benchmarks.forEach(bench => {
-      benchNames.add(bench["bench_name"])
-    });
-    console.log(benchNames)
-
+    benchNames = Object.values(bench)
 
     let providerSelector
     let graphSelector
     let benchNameSelector
-    let extractedSelector
     let graphs
     let benchId
     $(document).ready(function () {
       providerSelector = $('#provider')
       graphSelector = $('#graphType')
       benchNameSelector = $('#benchName')
-      extractedSelector = $('#extractedName')
       graphs = $('#graphs')
       benchId = $('#benchId')
 
@@ -233,14 +221,11 @@
       addBenchNameSelectorListeners()
       addProviderSelectorListeners()
       addGraphSelectorListeners()
-      addExtractedSelectorListeners()
     });
 
     function populateProviderSelector() {
       // populate provider selector
-      console.log("populate provider selector")
       providers.forEach(provider => {
-        console.log(provider)
         providerSelector.append($('<option>', {
           value: provider,
           text: provider,
@@ -250,9 +235,7 @@
 
     function populateGraphTypeSelector() {
       // populate graph selector
-      console.log("populate graph selector")
       graphTypes.forEach(graphType => {
-        console.log(graphType)
         graphSelector.append($('<option>', {
           value: graphType,
           text: graphType,
@@ -262,25 +245,10 @@
 
     function populateBenchSelector() {
       // populate bench selector
-      console.log("populate bench selector")
       benchNames.forEach(bname => {
-        console.log(bname)
         benchNameSelector.append($('<option>', {
           value: bname,
           text: bname,
-        }));
-      });
-    }
-
-    function populateExtractedSelector(extractedNames) {
-      // populate extracted selector
-      console.log("populate extracted selector")
-      extractedNames.forEach(extracted => {
-        console.log(extracted)
-        extractedSelector.append($('<option>', {
-          value: extracted.extracted_name,
-          text: extracted.extracted_name,
-          id: extracted.id
         }));
       });
     }
@@ -299,51 +267,53 @@
     }
 
     function addBenchNameSelectorListeners() {
-      // add filter listener
       benchNameSelector.change(function () {
-        extractedSelector.empty()
-        extractedSelector.append('<option selected></option>')
-
-        let extractedNames = benchmarks.filter(b => b.bench_name == $(this).val());
-        console.log(extractedNames)
-
-        populateExtractedSelector(extractedNames)
-      });
-    }
-
-    function addExtractedSelectorListeners() {
-      extractedSelector.change(function () {
         updateGraphs()
       });
     }
 
-    function checkAllselected(provider, graphType, benchName, extracted, extractedId) {
+
+    function checkAllselected(provider, graphType, benchName, extractedId) {
       if (provider == '') {
         return false
       } else if (provider == 'all') {
-        return graphType != '' && benchName != '' && extracted != '' && extractedId != ''
+        return graphType != '' && benchName != '' && extractedId != ''
       } else {
-        return benchName != '' && extracted != '' && extractedId != ''
+        return benchName != '' && extractedId != ''
       }
+    }
+
+    function getBenchID(benchName){
+      const benchEntries = Object.entries(bench)
+      for (let bentry of benchEntries) {
+        if (bentry[1] == benchName) {
+          return bentry[0];
+        }
+      }
+    }
+
+    function checkIfExist(provider, benchId){
+      // NETB 1
+      if (provider == "egi" && benchId == "817407f47eeb0c43023a5487985867a64960c778") {
+        return false;
+      }
+      // NETB 3
+      if (provider != "egi" && benchId == "56d916334c55408ad318eff68579a8b585569a4b") {
+        return false;
+      }
+      return true;
     }
 
     function updateGraphs() {
       let provider = providerSelector.val()
       let graphType = graphSelector.val()
       let benchName = benchNameSelector.val()
-      let extracted = extractedSelector.val().trim().replace(/\s/g, '_').replace(/[^-\w.]/g, '')
       let extractedId = ''
-      if (extracted != '') {
-        extractedId = extractedSelector.children(":selected").attr("id")
-        benchId.val(extractedId)
-        extractedId = extractedId.substr(0, 5)
-      }
 
       if (provider != 'all' && graphType == 'execution') {
         graphs.empty()
         benchId.val('')
         let machinesP = machines[provider]
-        console.log(machinesP)
         machinesP.forEach(machine => {
           graphs.append(`
             <div class="col-sm-6">
@@ -357,32 +327,43 @@
         return
       }
 
-      if (checkAllselected(provider, graphType, benchName, extracted, extractedId)) {
+      if (benchName == '') {
+        return
+      }
+
+      extractedId = getBenchID(benchName)
+      benchId.val(extractedId)
+
+      benchName = benchName.replaceAll(' ', '_')
+      extractedId = extractedId.substr(0, 5)
+
+      if (checkAllselected(provider, graphType, extractedId)) {
         graphs.empty()
         // populate the graphs
-        console.log(provider)
         if (provider == 'all') {
           providers.forEach(provider => {
-            graphs.append(`
-              <div class="col-sm-6">
-                <h1>` + provider + `</h1>
-                <div id="spinner-` + provider + `" class="loader" style="position:absolute;left:0;right:0;margin-left:auto;margin-right:auto;"></div>
-                <iframe id="graph-` + provider + `" scrolling="no" frameborder="0" style="position: relative; height: 500px; width: inherit; visibility:hidden"
-                src="output/` + graphType + `/html/` + provider + `_` + benchName + `_` + extracted + `_` + extractedId + `.html"
-                onload="document.getElementById('spinner-` + provider + `').style.display='block';document.getElementById('graph-` + provider + `').style.visibility='visible';"></iframe>
-              </div>`)
+            if (checkIfExist(provider, benchId.val())){
+              graphs.append(`
+                <div class="col-sm-6">
+                  <h1>` + provider + `</h1>
+                  <div id="spinner-` + provider + `" class="loader" style="position:absolute;left:0;right:0;margin-left:auto;margin-right:auto;"></div>
+                  <iframe id="graph-` + provider + `" scrolling="no" frameborder="0" style="position: relative; height: 500px; width: inherit; visibility:hidden"
+                  src="output/` + graphType + `/html/` + provider + `_` + benchName + `_` + extractedId + `.html"
+                  onload="document.getElementById('spinner-` + provider + `').style.display='block';document.getElementById('graph-` + provider + `').style.visibility='visible';"></iframe>
+                </div>`)
+            }
           });
           return
         }
 
         graphTypes.forEach(graphType => {
-          if(graphType != 'execution'){
+          if(graphType != 'execution' && checkIfExist(provider, benchId.val())){
             graphs.append(`
             <div class="col-sm-6">
-              <h1>` + provider + `</h1>
+              <h1>` + graphType + `</h1>
               <div id="spinner-` + graphType + `" class="loader" style="position:absolute;left:0;right:0;margin-left:auto;margin-right:auto;"></div>
               <iframe id="graph-` + graphType + `" scrolling="no" frameborder="0" style="position: relative; height: 500px; width: inherit; visibility:hidden"
-              src="output/` + graphType + `/html/` + provider + `_` + benchName + `_` + extracted + `_` + extractedId + `.html"
+              src="output/` + graphType + `/html/` + provider + `_` + benchName + `_` + extractedId + `.html"
               onload="document.getElementById('spinner-` + graphType + `').style.display='block';document.getElementById('graph-` + graphType + `').style.visibility='visible';"></iframe>
             </div>`)
           }

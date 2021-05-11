@@ -1,19 +1,25 @@
 vms:
     T1-1:
-      name: EGI_T1-1
+      name: T1-1
+      long_name: EGI_T1-1
       price: 0.071272
     T1-2:
-      name: EGI_T1-2
+      name: T1-2
+      long_name: EGI_T1-2
       price: 0.071272
     T2-1:
-      name: EGI_T2-1
+      name: T2-1
+      long_name: EGI_T2-1
       price: 0.142544
     T3-1:
-      name: EGI_T3-1
+      name: T3-1
+      long_name: EGI_T3-1
       price: 0.125008
     T3-2:
-      name: EGI_T3-2
+      name: T3-2
+      long_name: EGI_T3-2
       price: 0.125008
     T4-1:
-      name: EGI_T4-1
+      name: T4-1
+      long_name: EGI_T4-1
       price: 0.250016

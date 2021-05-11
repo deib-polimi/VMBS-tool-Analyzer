@@ -1,7 +1,7 @@
-# Cloud Performance - Analyzer
+# VMBS-tool - Analyzer
 
 ### Data Parser
-Extract data from raw benchmark results.
+Parse data from raw benchmark output and analyze results
 
 ### Data Visualizer
-Visualize and plot graphs.
+Visualize and plot benchmark graphs

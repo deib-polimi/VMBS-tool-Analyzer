@@ -1,19 +1,25 @@
 vms:
     i-0619c7938d65d53cf:
-      name: a1.large - eu-central-1a
+      name: a1.large-1
+      long_name: a1.large - eu-central-1a
       price: 0.0582
     i-063baa2ee72c3ab33: 
-      name: a1.large - eu-central-1b
+      name: a1.large-2
+      long_name: a1.large - eu-central-1b
       price: 0.0582
     i-0733ddb8b1c753b35:
-      name: a1.xlarge - eu-central-1b
+      name: a1.xlarge-1
+      long_name: a1.xlarge - eu-central-1b
       price: 0.1164
     i-064f72b2f9a158570:
-      name: m5.large - eu-central-1a
+      name: m5.large-1
+      long_name: m5.large - eu-central-1a
       price: 0.115
     i-06f9bf39dcdbdfe05:
-      name: m5.large - eu-central-1b
+      name: m5.large-2
+      long_name: m5.large - eu-central-1b
       price: 0.115
     i-0ef37f68caaf87f79:
-      name: m5.xlarge - eu-central-1b
+      name: m5.xlarge-1
+      long_name: m5.xlarge - eu-central-1b
       price: 0.23
