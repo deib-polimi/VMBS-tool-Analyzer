@@ -1,2 +1,2 @@
 ## Data Visualizer
-https://nicholasrasi.github.io/CloudPerformance-Analyzer/data_visualizer/index.html 
+https://deib-polimi.github.io/VMBS-tool-Analyzer/data_visualizer/index.html 

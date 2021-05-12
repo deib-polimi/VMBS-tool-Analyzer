@@ -7,4 +7,4 @@ Parse data from raw benchmark output and analyze results
 Visualize and plot benchmark graphs
 
 **Graphs are visible here:**
-https://nicholasrasi.github.io/VMBS-tool-Analyzer/data_visualizer/index.html 
+https://deib-polimi.github.io/VMBS-tool-Analyzer/data_visualizer/index.html 
