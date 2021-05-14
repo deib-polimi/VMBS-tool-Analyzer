@@ -100,4 +100,4 @@ def plotly_dates(x, y, label=None, suptitle=None):
     fig.show()
 
 def change_uom(uom):
-  return uom.replace("s", "sec")
+  return uom[::-1].replace("s", "sec"[::-1], 1)[::-1]
